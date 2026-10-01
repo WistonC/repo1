@@ -1,0 +1,24 @@
+services:
+  omnivoice:
+    build: .
+    image: omnivoice:latest
+    container_name: omnivoice
+    ports:
+      - "7860:7860"
+    environment:
+      # 国内网络可改为 https://hf-mirror.com
+      - HF_ENDPOINT=${HF_ENDPOINT:-https://huggingface.co}
+    volumes:
+      # 模型缓存，避免每次重启重新下载
+      - hf-cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+volumes:
+  hf-cache:

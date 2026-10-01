@@ -1,0 +1,4 @@
+# 无 NVIDIA 显卡时使用：docker compose -f docker-compose.yml -f docker-compose.cpu.yml up -d
+services:
+  omnivoice:
+    deploy: !reset {}
